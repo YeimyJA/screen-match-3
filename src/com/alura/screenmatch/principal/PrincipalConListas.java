@@ -1,6 +1,8 @@
 package com.alura.screenmatch.principal;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import com.alura.screenmatch.modelos.Pelicula;
 import com.alura.screenmatch.modelos.Serie;
@@ -22,11 +24,26 @@ public class PrincipalConListas {
         lista.add(otraPelicula);
         lista.add(lost);
 
-        for (Titulo item : lista) {
-            System.out.println(item.getNombre());
-            if (item instanceof Pelicula pelicula ) {
-                System.out.println(pelicula.getClasificacion());   
-            }   
+        for(Titulo item : lista) {
+            System.out.println("Nombre: " +item.getNombre());
+            if (item instanceof Pelicula pelicula && pelicula.getClasificacion() > 2) {
+                System.out.println("Clasificacion: "+pelicula.getClasificacion());
+            }
         }
+        
+        ArrayList<String> listadeArtistas = new ArrayList<>();
+        listadeArtistas.add("Penelope Cruz");
+        listadeArtistas.add("Antonio Banderas");
+        listadeArtistas.add("Ricardo Darin");
+        System.out.println( "lista:   " + listadeArtistas);
+
+        Collections.sort(listadeArtistas);
+        System.out.println("Lista de artista ordenadas: "+listadeArtistas);
+
+        Collections.sort(lista);
+        System.out.println("Lista de titulos ordenadas: "+lista);
+
+        lista.sort(Comparator.comparing(Titulo::getFechaDeLanzamiento));
+        System.out.println("Lista ordenada por fecha "+lista);
     }
 }
