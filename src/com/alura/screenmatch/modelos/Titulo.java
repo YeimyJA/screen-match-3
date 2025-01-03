@@ -1,5 +1,6 @@
 package com.alura.screenmatch.modelos;
 
+import com.alura.screenmatch.excepcion.ErrorEnConversionDuracionException;
 import com.google.gson.annotations.SerializedName;
 
 public class Titulo implements Comparable<Titulo>{
@@ -15,6 +16,15 @@ public class Titulo implements Comparable<Titulo>{
     public Titulo(String nombre, int fechaDeLanzamiento) {
         this.nombre = nombre;
         this.fechaDeLanzamiento = fechaDeLanzamiento;
+    }
+
+    public Titulo(TituloOmdb mTituloOmdb) {
+        this.nombre = mTituloOmdb.title();
+        this.fechaDeLanzamiento = Integer.valueOf(mTituloOmdb.year());
+        if (mTituloOmdb.runtime().contains("N/A")) {
+            throw new ErrorEnConversionDuracionException("No es posible convertir la diracion, porque contiene un N/A");
+        }
+        this.duracionEnMinutos = Integer.valueOf(mTituloOmdb.runtime().substring(0, 3).replace(" ",""));
     }
 
     public String getNombre() {
@@ -74,7 +84,7 @@ public class Titulo implements Comparable<Titulo>{
 
     @Override
     public String toString() {
-        return "nombre=" + nombre + ", fechaDeLanzamiento=" + fechaDeLanzamiento;
+        return "nombre=" + nombre + ", fechaDeLanzamiento=" + fechaDeLanzamiento + ", duracion=" + duracionEnMinutos;
     }
 
     
